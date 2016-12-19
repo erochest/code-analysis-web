@@ -49,6 +49,9 @@
     <head>
         <title>Single Page Application</title>
 
+        <!-- ERR:
+             Well, first I'd pull style and scripts out into separate files.
+        -->
         <style>
         body {
             margin: 0px;
@@ -101,6 +104,12 @@
          *        ...
          *    ]
          */
+
+        /* ERR:
+         * This is minor, but it would be nice to be consistent about using E6
+         * arrow syntax and traditional function syntax, unless there's a
+         * reason to deviate (which I don't see here).
+         */
         function getPersonList() {
             return new Promise((resolve, reject) => {
                 fetch('http://api.namegame.willowtreemobile.com/').then(function(response) {
@@ -123,6 +132,10 @@
          ***************************************************/
 
 
+        /* ERR:
+         * Again, it's minor (although this seems less so), but be consistent
+         * on how you create function.
+         */
         function getLastName(fullName) {
             return fullName.match(/\w+/g)[1];
         }
@@ -138,6 +151,10 @@
             // Make a copy & don't mutate the passed in list
             let result = list.slice(1);
 
+            /* ERR:
+             * The missing semicolon would have been flagged by my linter.
+             * That makes me think this wasn't linted. It probably should be.
+             */
             let tmp, j, i = list.length - 1
 
             for (; i > 0; i -= 1) {
@@ -150,6 +167,15 @@
             return result;
         }
 
+
+        /* ERR:
+         * The UI element for this could stand out more. I didn't realize it
+         * was there at first.
+         *
+         * Also, this functionality would be more helpful if it searched using
+         * String.search or by breaking the name apart and return true if
+         * searchForName matches the start of either name.
+         */
 
         /**
          * Remove any people that do not have the name we are
@@ -180,6 +206,11 @@
          */
         function sortObjListByProp(prop) {
             return function(objList) {
+                /* ERR:
+                 * If we're really serious about using immutable data
+                 * structures (or mutable data structures immutably),
+                 * we should probably consider using immutable.js or mori.
+                 */
                 // Make a copy & don't mutate the passed in list
                 let result = objList.slice(1);
 
@@ -192,6 +223,9 @@
                         return 1;
                     }
 
+                    /* ERR
+                     * This should be 0.
+                     */
                     return 1;
                 });
 
@@ -201,6 +235,9 @@
 
         const sortByFirstName = sortObjListByProp('name');
 
+        /* ERR:
+         * Umm. No. This doesn't work as advertised.
+         */
         const sortByLastName = (personList) => sortByFirstName(personList).reverse();
 
 
