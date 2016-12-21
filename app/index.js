@@ -49,7 +49,7 @@ function getPersonList() {
 
 /* ERR:
  * Again, it's minor (although this seems less so), but be consistent
- * on how you create function.
+ * on how you create functions.
  */
 function getLastName(fullName) {
     return fullName.match(/\w+/g)[1];
